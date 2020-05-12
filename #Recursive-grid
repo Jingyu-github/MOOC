@@ -1,0 +1,52 @@
+#找零问题
+
+'''
+思路：
+基本结束条件：
+找零面值 正好等于某种硬币
+
+减小规模问题：
+对每种硬币尝试一次：
+找零减去penny后 求对款硬币最少数量（递归调用自身）
+找零减去nikel后 求对款硬币最少数量（递归调用自身）
+找零减去dime后 求对款硬币最少数量（递归调用自身）
+找零减去quarter后 求对款硬币最少数量（递归调用自身）
+'''
+
+#min number of change
+def recMC(coinValueList,change):
+	minCoins=change
+	if change in coinValueList:
+		return 1 #return min scale
+	else:
+		for i in [c for c in coinValueList if c<=change]:
+			numCoins=1+recMC(coinValueList,change-i)
+			if numCoins< minCoins:
+				minCoins= numCoins
+	return minCoins
+
+print(recMC[1,5,10,25],63))
+
+#但是有多次重复计算
+
+#优化算法--建立一个中间表，把中间结果保存起来，在计算之前查表看看是否已经计算过
+
+def recMC(coinValueList,change,knowResult):
+	minCoins=change
+	if change in coinValueList: #基本结束条件
+		knowResult[change]=1 #记录最优解
+			return 1 #return min scale
+	elif knowResult[change]>0：#有最优解，直接查表
+		return knowResult[change]
+	else:
+		for i in [ c for c in coinValueList if c<=change]:
+			numCoins=1+recDC(coinValueList, change - i, knowResult]:
+			
+			if numCoins < minCoins:
+				minCoins=numCoins#找到最优解
+				knowResult[change]=minCoins
+			
+			return minCoins
+print(recDC([1,5,10,25],63,[0]*64))
+			
+
